@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # https://gist.github.com/rilian/e89d9dbc096f56ebcb1d
 #
 # Custom rspec matcher for testing CanCan abilities.

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Requests
   module JsonHelpers
     attr_reader :response
@@ -6,19 +7,25 @@ module Requests
       JSON.parse(response.body)
     end
 
+    def respond_to_missing?(method, include_private = false)
+      super
+    end
+
     def method_missing(method, *args)
-      return unless method =~ /_helper$/
+      if method =~ /_helper$/
+        raise "#{method} expects a valid argument, '#{args.first}' passed" if args.first.blank?
+        raise "#{args.first.class} is not persisted" if args.first.try(:id).blank?
 
-      raise "#{method} expects a valid argument, '#{args.first}' passed" if args.first.blank?
-      raise "#{args.first.class} is not persisted" if args.first.try(:id).blank?
-
-      method.to_s.gsub(/_helper$/, 'Serializer').classify.constantize.new(args.first, root: nil).attributes.as_json
+        method.to_s.gsub(/_helper$/, 'Serializer').classify.constantize.new(args.first, root: nil).attributes.as_json
+      else
+        super
+      end
     end
   end
 
   module AuthenticationHelpers
     def get_as_user(url, options = {})
-      get(url, options, _user_auth_headers)
+      get(url, params: options, headers: _user_auth_headers)
     end
 
     [:post, :put, :delete, :patch].each do |m|
@@ -26,7 +33,7 @@ module Requests
         opts = {} if opts.blank?
         opts = opts.to_json unless opts.values.any? { |v| v.class == Rack::Test::UploadedFile }
 
-        send(m, url, opts, _user_auth_headers)
+        send(m, url, params: opts, headers: _user_auth_headers)
       end
     end
 

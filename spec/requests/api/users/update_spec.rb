@@ -1,11 +1,15 @@
+# frozen_string_literal: true
 describe 'API Users' do
   describe 'PATCH /api/users/:id' do
     context 'when User exists' do
-      let(:user) { create :user, email: 'old@example.com' }
+      let(:user) do
+        create :user,
+          email: 'old@example.com'
+      end
 
       context 'with valid params' do
         it 'updates User' do
-          patch_as_user "/api/users/#{user.id}", format: :json, email: 'new@example.com'
+          patch_as_user String.new("/api/users/#{user.id}"), email: 'new@example.com'
 
           user.reload
           expect(user.email).to eq 'new@example.com'
@@ -17,7 +21,7 @@ describe 'API Users' do
 
       context 'with invalid params' do
         it 'does not update User' do
-          patch_as_user "/api/users/#{user.id}", format: :json, email: 'invalid'
+          patch_as_user String.new("/api/users/#{user.id}"), email: 'invalid'
 
           user.reload
           expect(user.email).to eq 'old@example.com'
@@ -29,7 +33,7 @@ describe 'API Users' do
 
       context 'when user does not exist' do
         it 'does not update User' do
-          patch_as_user '/api/users/0', format: :json
+          patch_as_user String.new('/api/users/0')
 
           expect(json).to eq('errors' => ["Couldn't find User with 'id'=0"])
           expect(response.status).to eq 404
@@ -40,7 +44,7 @@ describe 'API Users' do
         let(:other_user) { create :user }
 
         it 'does not update User' do
-          patch_as_user "/api/users/#{other_user.id}", format: :json
+          patch_as_user String.new("/api/users/#{other_user.id}")
 
           user.reload
           expect(user.email).to eq 'old@example.com'

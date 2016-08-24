@@ -1,6 +1,14 @@
+# frozen_string_literal: true
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
+require 'coveralls'
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+                                                                 SimpleCov::Formatter::HTMLFormatter,
+                                                                 Coveralls::SimpleCov::Formatter
+                                                               ])
+SimpleCov.start
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
@@ -23,6 +31,9 @@ RSpec.configure do |config|
   config.order = :random
 
   Kernel.srand config.seed
+
+  config.color = true
+  config.formatter = :documentation # :progress, :html, :textmate
 
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs

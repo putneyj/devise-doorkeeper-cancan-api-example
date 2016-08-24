@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::SignupController < Api::BaseController
   skip_before_action :doorkeeper_authorize!
   skip_before_action :authenticate_user!
@@ -7,7 +8,7 @@ class Api::SignupController < Api::BaseController
     user = User.new(signup_params)
 
     if user.save
-      render json: user, serialzier: UserSerializer, status: 201
+      render json: user, serializer: UserSerializer, status: 201
     else
       render json: { errors: user.errors }, status: 422
     end

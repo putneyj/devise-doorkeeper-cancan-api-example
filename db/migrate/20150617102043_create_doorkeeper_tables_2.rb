@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateDoorkeeperTables2 < ActiveRecord::Migration
   def change
     create_table :oauth_access_grants do |t|

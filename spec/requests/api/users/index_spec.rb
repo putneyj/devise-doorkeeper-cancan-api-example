@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 describe 'API Users' do
   describe 'GET /api/users' do
     let!(:user) { create :admin_user }

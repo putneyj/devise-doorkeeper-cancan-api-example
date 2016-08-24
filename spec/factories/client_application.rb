@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :client_application, class: Doorkeeper::Application do
     sequence(:name) { |n| "app-#{n}" }

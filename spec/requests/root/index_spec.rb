@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 describe 'Root PATCH /api/users/:id' do
   describe 'GET /' do
     it 'returns message' do

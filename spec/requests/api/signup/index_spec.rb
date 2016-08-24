@@ -1,11 +1,14 @@
+# frozen_string_literal: true
 describe 'API Signup' do
   describe 'POST /api/signup' do
     context 'with valid params' do
       it 'creates User' do
-        post '/api/signup',
-          format: :json,
-          email: 'user@example.com',
-          password: '12345678'
+        post String.new('/api/signup'),
+          params: {
+            email: 'user@example.com',
+            password: '12345678'
+          },
+          as: :json
 
         user = User.first
         expect(user.email).to eq 'user@example.com'
@@ -17,10 +20,12 @@ describe 'API Signup' do
 
     context 'with invalid params' do
       it 'does not create User' do
-        post '/api/signup',
-          format: :json,
-          email: 'invalid',
-          password: ''
+        post String.new('/api/signup'),
+          params: {
+            email: 'invalid',
+            password: ''
+          },
+          as: :json
 
         expect(User.count).to eq 0
 

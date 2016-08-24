@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.2'
-gem 'rails-api'
+gem 'rails', '~> 5.0'
 gem 'active_model_serializers', '>=0.10.x'
 gem 'pg'
 gem 'dotenv-rails'
@@ -14,6 +14,9 @@ gem 'cancancan'
 
 group :development, :test do
   gem 'byebug'
+  gem 'guard'
+  gem 'guard-rspec', require: false
+  gem 'guard-rubocop'
 end
 
 group :development do
@@ -32,4 +35,5 @@ group :test do
   gem 'webmock', require: 'webmock/rspec'
   gem 'timecop'
   gem 'simplecov', require: false
+  gem 'coveralls', require: false
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 describe 'Admin Ability' do
   let(:user) { create(:admin_user) }
   let(:ability) { Ability.new(user) }

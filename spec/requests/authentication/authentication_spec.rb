@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 describe 'Authentication', reqres_section: 'Login and Sign up' do
   describe 'POST /oauth/token' do
     describe 'grant_type password' do
@@ -7,9 +8,11 @@ describe 'Authentication', reqres_section: 'Login and Sign up' do
         context 'without client credentials' do
           it 'returns token', reqres_title: 'Get access token without client credentials' do
             post '/oauth/token',
-              'grant_type' => 'password',
-              'username' => user.email,
-              'password' => '12345678'
+              params: {
+                'grant_type' => 'password',
+                'username' => user.email,
+                'password' => '12345678'
+              }
 
             expect(Doorkeeper::AccessToken.count).to eq 1
             expect(Doorkeeper::AccessToken.first.application_id).to eq nil
@@ -28,11 +31,13 @@ describe 'Authentication', reqres_section: 'Login and Sign up' do
 
           it 'returns token', reqres_title: 'Get access token with client credentials' do
             post '/oauth/token',
-              'grant_type' => 'password',
-              'username' => user.email,
-              'password' => '12345678',
-              'client_id' => client_application.uid,
-              'client_secret' => client_application.secret
+              params: {
+                'grant_type' => 'password',
+                'username' => user.email,
+                'password' => '12345678',
+                'client_id' => client_application.uid,
+                'client_secret' => client_application.secret
+              }
 
             expect(Doorkeeper::AccessToken.count).to eq 1
             expect(Doorkeeper::AccessToken.first.application_id).to eq client_application.id
@@ -50,14 +55,17 @@ describe 'Authentication', reqres_section: 'Login and Sign up' do
       context 'when credentials are not valid', :skip_reqres do
         it 'returns error' do
           post '/oauth/token',
-            'grant_type' => 'password',
-            'username' => 'invalid@example.com',
-            'password' => 'invalid'
+            params: {
+              'grant_type' => 'password',
+              'username' => 'invalid@example.com',
+              'password' => 'invalid'
+            }
 
           expect(json).to eq(
             'error' => 'invalid_grant',
             'error_description' => 'The provided authorization grant is invalid, expired, revoked, does not match ' \
-              'the redirection URI used in the authorization request, or was issued to another client.')
+              'the redirection URI used in the authorization request, or was issued to another client.'
+          )
           expect(response.status).to eq 401
         end
       end
@@ -69,9 +77,11 @@ describe 'Authentication', reqres_section: 'Login and Sign up' do
 
         it 'returns token' do
           post '/oauth/token',
-            'grant_type' => 'client_credentials',
-            'client_id' => client_application.uid,
-            'client_secret' => client_application.secret
+            params: {
+              'grant_type' => 'client_credentials',
+              'client_id' => client_application.uid,
+              'client_secret' => client_application.secret
+            }
 
           expect(Doorkeeper::AccessToken.count).to eq 1
           expect(Doorkeeper::AccessToken.first.application_id).to eq client_application.id
@@ -95,17 +105,19 @@ describe 'Authentication', reqres_section: 'Login and Sign up' do
 
       it 'returns new refresh_token', reqres_title: 'Get new refresh token' do
         post '/oauth/token',
-          'grant_type' => 'refresh_token',
-          'refresh_token' => refresh_token,
-          'client_id' => client_application.uid,
-          'client_secret' => client_application.secret
+          params: {
+            'grant_type' => 'refresh_token',
+            'refresh_token' => refresh_token,
+            'client_id' => client_application.uid,
+            'client_secret' => client_application.secret
+          }
 
         expect(Doorkeeper::AccessToken.count).to eq 2
         expect(Doorkeeper::AccessToken.second.application_id).to eq client_application.id
 
         expect(json['access_token'].size).to eq 64
         expect(json['refresh_token'].size).to eq 64
-        expect(json['refresh_token'].size).to_not eq refresh_token
+        expect(json['refresh_token'].size).not_to eq refresh_token
         expect(json['token_type']).to eq 'bearer'
         expect(json['expires_in']).to eq 7200
         expect(json['created_at'].present?).to eq true

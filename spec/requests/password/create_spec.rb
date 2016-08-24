@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 describe 'API Password' do
   describe 'POST /users/password' do
     context 'when User exists' do
@@ -7,7 +8,9 @@ describe 'API Password' do
         expect(user.reset_password_token.present?).to eq false
         expect(ActionMailer::Base.deliveries.count).to eq 0
 
-        post '/users/password', format: :json, user: { email: user.email }
+        post String.new('/users/password'),
+          params: { user: { email: user.email } },
+          as: :json
 
         user.reload
         expect(user.reset_password_token.present?).to eq true
@@ -24,7 +27,9 @@ describe 'API Password' do
 
     context 'when User does not exist' do
       it 'returns errors' do
-        post '/users/password', format: :json, user: { email: 'inexisting@example.com' }
+        post String.new('/users/password'),
+          params: { user: { email: 'inexisting@example.com' } },
+          as: :json
 
         expect(ActionMailer::Base.deliveries.count).to eq 0
 
