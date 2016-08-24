@@ -1,16 +1,27 @@
-# Docker Infrastructure
 sudo: false
 bundler_args: "--jobs=3 --retry=3"
 cache: bundler
+
+env:
+  global:
+    - secure: UdVkFD3qu/BNy6MQN38Csy3DD58vnFXttCbwgdWvZJZ5m87LMwfbGopG50VcUEurrUlL0s/bY1BsWfm7PaW60dBF1ReEOuTIE/Ys1WQ34FOP2HqRMtBtJiZLAT6YOK3riwRMcnRvy4Fpqy3+T45Swqi8OIKDfh0jpYt6WBk6DrrnRWRljbQVE5WDfacan7V2Xilz4Y8gt1x38jn2XmTFzCX8zWnHkveSvJdaWadqlMzc6rdcEUGuiJDZsyITaPPibKRVxM73hfY4tx90BianLWjPArqoHw/IUdcFzlrHNpT67ugLEM9LxopvxfUcuibPuElXQ5nikhQkxlOo8Xos0KbQAURnlFizib14+6MObXa4aSk6T09AsTcvP7bxmWxlPhycJtch+ft/8Ey3y/yC76a3PSpo7/ZxhfDYEk6IXZXI/pOXZ6A7XQ+D4XL/mgraKJlonVITap4erpbCpFMiXAQvQcS3gxW5THK3S8q2YTfmvBgM3A8tM8YVrlsNFrbVWo9TuWlmJEm104c1nWH/9NygRnUqjq+a6yNXTNkLManuZqUED/leQw1Y3FUtJrBTQ2BeeD/7E0C1e7H09VhyXO0AnoGUbPtod6qhpXpMPFro/NRZ7/kV882lCQYXIWnPWvEO3gd/3bd6R44PoPZMfSgvlk+9Ovf7ZZiG0HhT9XU=
+
+services:
+  - postgresql
+
+before_script:
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 before_install:
   - gem update bundler
 
 language: ruby
+
 rvm:
   - 2.3.1
   - ruby-head
 
 matrix:
   allow_failures:
-    - rvm: ruby-head
+  - rvm: ruby-head
