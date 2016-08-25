@@ -1,7 +1,7 @@
 Example API
 -------------
 
-[![Build Status](https://travis-ci.org/putneyj/devise-doorkeeper-cancan-api-example.svg?branch=master)](https://travis-ci.org/putneyj/devise-doorkeeper-cancan-api-example) [![Coverage Status](https://coveralls.io/repos/github/putneyj/devise-doorkeeper-cancan-api-example/badge.svg?branch=master)](https://coveralls.io/github/putneyj/devise-doorkeeper-cancan-api-example?branch=master) [![Code Climate](https://codeclimate.com/github/putneyj/devise-doorkeeper-cancan-api-example/badges/gpa.svg)](https://codeclimate.com/github/putneyj/devise-doorkeeper-cancan-api-example) [![Dependency Status](https://gemnasium.com/badges/github.com/putneyj/devise-doorkeeper-cancan-api-example.svg)](https://gemnasium.com/github.com/putneyj/devise-doorkeeper-cancan-api-example)
+[![Build Status](https://travis-ci.org/putneyj/devise-doorkeeper-cancan-api-example.svg?branch=master)](https://travis-ci.org/putneyj/devise-doorkeeper-cancan-api-example) [![Coverage Status](https://coveralls.io/repos/github/putneyj/devise-doorkeeper-cancan-api-example/badge.svg?branch=master)](https://coveralls.io/github/putneyj/devise-doorkeeper-cancan-api-example?branch=master) [![Dependency Status](https://gemnasium.com/badges/github.com/putneyj/devise-doorkeeper-cancan-api-example.svg)](https://gemnasium.com/github.com/putneyj/devise-doorkeeper-cancan-api-example)
 
 # rails 4, rails-api, devise, doorkeeper, oauth, cancancan, rspec, puma, vcr, factory_girl, reqres_rspec, pg, dotenv, rack-cors, active_model_serializers, rubocop
 
