@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 describe 'User Ability' do
   describe 'access to User' do
+    subject { ability }
     let(:user) { create(:user) }
     let(:ability) { Ability.new(user) }
-    subject { ability }
 
     let(:other_user) { create :user }
 

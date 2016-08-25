@@ -17,6 +17,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
+  gem 'guard-brakeman'
 end
 
 group :development do
